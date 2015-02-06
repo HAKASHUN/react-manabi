@@ -1,10 +1,24 @@
 ## 001_jsx-compiler
 
+### DEMO
+
+[DEMO SITE](http://hakashun.github.io/react-manabi/001_jsx-compiler/)
+
+### Initialize
+
+```html
+<!-- react library -->
+<script src="http://fb.me/react-0.12.2.js"></script>
+<!-- jsx tranform library -->
+<script src="http://fb.me/JSXTransformer-0.12.2.js"></script>
+```
+
 ### Hello React!
 
 `/** @jsx React.DOM */`
 
 ```javascript
+// Define <Transformer></Tramsformer> Tag.
 var Transformer = React.createClass({});
 ```
 
@@ -14,6 +28,16 @@ render: function() {
             <div>Hello React!</div>
         );
     }
+```
+
+```html
+<script type="text/jsx">
+    /** @jsx React.DOM */
+    React.render(
+            <Transformer></Transformer>,
+            document.getElementById('app')
+    )
+</script>
 ```
 
 ### Input Event
