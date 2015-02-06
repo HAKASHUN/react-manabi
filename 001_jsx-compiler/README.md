@@ -31,3 +31,19 @@ update: function(e) {
     console.log(e);
 },
 ```
+
+### Output State
+
+```html
+<pre>{this.state.output}</pre>
+```
+
+```javascript
+var jsXcode = e.target.value;
+```
+
+```javascript
+this.setState({
+    output: jsXcode
+});
+```
