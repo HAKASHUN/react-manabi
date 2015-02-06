@@ -4,7 +4,8 @@ var Transformer = React.createClass({
         return {
           output: '',
           input: '/** @jsx React.DOM */\n',
-          err: ''
+          err: '',
+          errClass: 'error hide'
         };
     },
     update: function(e) {
@@ -13,19 +14,22 @@ var Transformer = React.createClass({
         try {
             this.setState({
                 output: JSXTransformer.transform(jsXcode).code,
-                err: ''
+                err: '',
+                errClass: 'error hide'
             });
         } catch(e) {
             this.setState({
-                err: e.message
+                err: e.message,
+                errClass: 'error show'
             })
         }
     },
     render: function() {
         return (
-            <div>
-                <div className="error">
-                    <p>{this.state.err}</p>
+            <div className="content">
+                <div className={this.state.errClass}>
+                    <div className="growl-title">Error!</div>
+                    <div className="growl-message">{this.state.err}</div>
                 </div>
                 <div className="row jsx">
                     <textarea defaultValue={this.state.input} onChange={this.update} />
