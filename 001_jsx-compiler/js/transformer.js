@@ -9,9 +9,13 @@ var Transformer = React.createClass({
     update: function(e) {
         console.log(e);
         var jsXcode = e.target.value;
-        this.setState({
-            output: jsXcode
-        });
+        try {
+            this.setState({
+                output: JSXTransformer.transform(jsXcode).code
+            });
+        } catch(e) {
+            console.log(e);
+        }
     },
     render: function() {
         return (

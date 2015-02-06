@@ -62,3 +62,11 @@ getInitialState: function() {
     };
 }
 ```
+
+### Transform Jsx
+
+```javascript
+this.setState({
+    output: JSXTransformer.transform(jsXcode).code
+});
+```
