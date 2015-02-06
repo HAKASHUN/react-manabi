@@ -70,3 +70,24 @@ this.setState({
     output: JSXTransformer.transform(jsXcode).code
 });
 ```
+
+### Output Transform Error
+
+```html
+<div className="error">
+    <p>{this.state.err}</p>
+</div>
+```
+
+```javascript
+try {
+    this.setState({
+        output: JSXTransformer.transform(jsXcode).code,
+        err: ''
+    });
+} catch(e) {
+    this.setState({
+        err: e.message
+    });
+}
+```
