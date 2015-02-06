@@ -2,7 +2,8 @@
 var Transformer = React.createClass({
     getInitialState: function() {
         return {
-          output: ''
+          output: '',
+          input: '/** @jsx React.DOM */\n'
         };
     },
     update: function(e) {
@@ -16,7 +17,7 @@ var Transformer = React.createClass({
         return (
             <div>
                 <div className="row jsx">
-                    <textarea onChange={this.update} />
+                    <textarea defaultValue={this.state.input} onChange={this.update} />
                 </div>
                 <div className="row js">
                     <pre>{this.state.output}</pre>

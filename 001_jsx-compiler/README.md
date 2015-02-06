@@ -47,3 +47,18 @@ this.setState({
     output: jsXcode
 });
 ```
+
+### Input DefaultValue
+
+```html
+<textarea defaultValue={this.state.input} onChange={this.update} />
+```
+
+```javascript
+getInitialState: function() {
+    return {
+        output: '',
+        input: '/** @jsx React.DOM */\n'
+    };
+}
+```
