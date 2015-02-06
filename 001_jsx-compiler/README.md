@@ -1,6 +1,6 @@
 ## 001_jsx-compiler
 
-### memo
+### Hello React!
 
 `/** @jsx React.DOM */`
 
@@ -14,4 +14,20 @@ render: function() {
             <div>Hello React!</div>
         );
     }
+```
+
+### Input Event
+
+```html
+<div className="row jsx">
+```
+
+```html
+<textarea onChange={this.update} />
+```
+
+```javascript
+update: function(e) {
+    console.log(e);
+},
 ```
