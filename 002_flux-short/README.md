@@ -63,3 +63,34 @@ var APP = ...
 module.exports = APP;
 ```
 
+### render APP
+
+#### APP component
+
+```javascript
+/** @jsx React.DOM */
+var React = require('react');
+var APP = React.createClass({
+    render: function() {
+        return (
+          <h1>Hello React!</h1>
+        );
+    }
+});
+
+module.exports = APP
+```
+
+#### render APP component
+
+```javascript
+/** @jsx React.DOM */
+var APP = require('./components/app');
+
+var React = require('react');
+
+React.render(
+    <APP />,
+    document.getElementById('main')
+);
+```
