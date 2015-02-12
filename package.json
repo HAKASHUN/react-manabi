@@ -1,0 +1,10 @@
+{
+  "name": "react-manabi",
+  "version": "0.0.2",
+  "devDependencies": {
+    "gulp": "*",
+    "gulp-util": "^3.0.1",
+    "gulp-webserver": "^0.8.3",
+    "minimist": "^0.1.0"
+  }
+}

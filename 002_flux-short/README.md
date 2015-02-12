@@ -23,4 +23,26 @@
 
 https://github.com/andreypopp/reactify
 
-###
+### entry point
+
+``` bash
+root/src
+├── index.html
+└── js
+    └── main.js
+```
+
+```html
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+  <div id="main" class="container"></div>
+  <!-- entry point -->
+  <script src="js/main.js"></script>
+</body>
+</html>
+```
