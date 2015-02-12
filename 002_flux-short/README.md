@@ -46,3 +46,20 @@ root/src
 </body>
 </html>
 ```
+
+### main.js
+
+```javascript
+/** @jsx React.DOM */
+var APP = require('./components/app');
+```
+
+#### './components/app.js'
+
+```javascript
+/** @jsx React.DOM */
+var APP = ...
+
+module.exports = APP;
+```
+
