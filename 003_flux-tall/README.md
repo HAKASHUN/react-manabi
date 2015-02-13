@@ -12,7 +12,6 @@ gulp.task('watch', function() {
 
 ![preview](http://facebook.github.io/flux/img/flux-simple-f8-diagram-with-client-action-1300w.png)
 
-
 - http://facebook.github.io/flux/docs/overview.html
 - http://www.infoq.com/jp/news/2014/05/facebook-mvc-flux
 > Every action is sent to all stores via the callbacks the stores register with the dispatcher.<br>
@@ -27,8 +26,86 @@ gulp.task('watch', function() {
 > また、Backboneフレームワー クのコレクションと同じものでもありません。ORM形式のオブジェクトの集 合を管理するよりももっと単純に、Storeはそのアプリケーション内のある特定のドメインについて、アプリケーションの状態を管理します。<br>
 
 - http://www.mobi-connect.net/success/detail.php?id=43
-
 > Viewで発生したユーザー操作はActionを経由してDispatcherを呼び出します。DispatcherのコールバックとしてStoreの処理を呼び出し、Storeは処理が終わるとChange Eventをemitします。<br>
 > ViewはStoreのChange Eventをlistenしていて、Change Eventを受け取ると自身のstateを更新します。<br>
 > stateの更新によりViewの表示が更新されます。
 
+### dispatcher structure
+
+```bash
+src
+├── index.html
+└── js
+    ├── components
+    │   └── app.js
+    ├── dispatchers
+    │   └── app-dispatcher.js
+    └── main.js
+
+```
+
+### actions
+
+### actions structure
+
+```bash
+src
+├── index.html
+└── js
+    ├── components
+    │   └── app.js
+    ├── dispatchers
+    │   └── app-dispatcher.js
+    ├── actions
+    │   └── app-actions.js
+    └── main.js
+
+```
+
+### connect view and actions
+
+#### app component
+
+```javascript
+/** @jsx React.DOM */
+var React = require('react');
+var AppActions = require('../actions/app-actions.js');
+
+/**
+ * @description
+ * <APP /> Component
+ */
+var APP = React.createClass({
+    handleClick: function() {
+        // execute addItem action
+        AppActions.addItem('this is the item');
+    },
+    render: function() {
+        return (
+          // bind handler
+          <h1 onClick={this.handleClick}>Hello React!</h1>
+        );
+    }
+});
+
+module.exports = APP;
+
+```
+
+#### app actions
+
+```javascript
+var AppDispatcher = require('../dispatchers/app-dispatcher.js');
+
+var AppActions = {
+  addItem: function(item) {
+      // Dispatch
+      AppDispatcher.handleViewAction({
+          actionType: 'addItem',
+          item: item
+      });
+  }
+};
+
+module.exports = AppAct
+```

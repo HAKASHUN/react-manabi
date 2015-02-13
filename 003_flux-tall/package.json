@@ -6,6 +6,8 @@
     "gulp-browserify": "*",
     "gulp-concat": "*",
     "react": "*",
-    "reactify": "*"
+    "reactify": "*",
+    "flux": "*",
+    "object-assign": "*"
   }
 }
