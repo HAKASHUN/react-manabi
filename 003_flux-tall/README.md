@@ -8,9 +8,9 @@ gulp.task('watch', function() {
 });
 ```
 
-### dispatcher
-
 ![preview](http://facebook.github.io/flux/img/flux-simple-f8-diagram-with-client-action-1300w.png)
+
+### dispatcher
 
 - http://facebook.github.io/flux/docs/overview.html
 - http://www.infoq.com/jp/news/2014/05/facebook-mvc-flux
@@ -29,6 +29,14 @@ gulp.task('watch', function() {
 > Viewで発生したユーザー操作はActionを経由してDispatcherを呼び出します。DispatcherのコールバックとしてStoreの処理を呼び出し、Storeは処理が終わるとChange Eventをemitします。<br>
 > ViewはStoreのChange Eventをlistenしていて、Change Eventを受け取ると自身のstateを更新します。<br>
 > stateの更新によりViewの表示が更新されます。
+
+
+facebookがdispatcherを公開しているので、それを継承する形で、アプリのdispatcherを作成する
+
+```javascript
+// https://github.com/facebook/flux/blob/master/src/Dispatcher.js
+var Dispatcher = require('flux').Dispatcher;
+```
 
 ### dispatcher structure
 
@@ -138,3 +146,14 @@ root/src
 ```
 
 #### app constants
+
+```javascript
+var AppConstants = {
+    ADD_ITEM: 'ADD_ITEM',
+    REMOVE_ITEM: 'REMOVE_ITEM',
+    INCREASE_ITEM: 'INCREASE_ITEM',
+    DECREASE_ITEM: 'DECREASE_ITEM'
+};
+
+module.exports =
+```
