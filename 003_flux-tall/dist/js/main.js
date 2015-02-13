@@ -18640,11 +18640,12 @@ module.exports = require('./lib/React');
 
 },{"./lib/React":33}],152:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/app-dispatcher.js');
+var AppConstants = require('../constants/app-constants.js');
 
 var AppActions = {
   addItem: function(item) {
       AppDispatcher.handleViewAction({
-          actionType: 'addItem',
+          actionType: AppConstants.ADD_ITEM,
           item: item
       });
   }
@@ -18652,7 +18653,7 @@ var AppActions = {
 
 module.exports = AppActions;
 
-},{"../dispatchers/app-dispatcher.js":154}],153:[function(require,module,exports){
+},{"../constants/app-constants.js":154,"../dispatchers/app-dispatcher.js":155}],153:[function(require,module,exports){
 /** @jsx React.DOM */
 var React = require('react');
 var AppActions = require('../actions/app-actions.js');
@@ -18667,7 +18668,7 @@ var APP = React.createClass({displayName: "APP",
     },
     render: function() {
         return (
-          React.createElement("h1", {onClick: this.handleClick}, "Hello React!")
+          React.createElement("h1", {onClick: this.handleClick}, "Add Item")
         );
     }
 });
@@ -18676,18 +18677,29 @@ module.exports = APP;
 
 
 },{"../actions/app-actions.js":152,"react":151}],154:[function(require,module,exports){
+var AppConstants = {
+    ADD_ITEM: 'ADD_ITEM',
+    REMOVE_ITEM: 'REMOVE_ITEM',
+    INCREASE_ITEM: 'INCREASE_ITEM',
+    DECREASE_ITEM: 'DECREASE_ITEM'
+};
+
+module.exports = AppConstants;
+
+},{}],155:[function(require,module,exports){
 var Dispatcher = require('flux').Dispatcher;
 var assign = require('object-assign');
 
 var AppDispatcher = assign(Dispatcher.prototype, {
    handleViewAction: function(action) {
        console.log(action);
+       alert('dispatch handle view action!')
    }
 });
 
 module.exports = AppDispatcher;
 
-},{"flux":1,"object-assign":5}],155:[function(require,module,exports){
+},{"flux":1,"object-assign":5}],156:[function(require,module,exports){
 /** @jsx React.DOM */
 var APP = require('./components/app');
 var React = require('react');
@@ -18696,4 +18708,4 @@ React.render(
     document.getElementById('main')
 );
 
-},{"./components/app":153,"react":151}]},{},[155])
+},{"./components/app":153,"react":151}]},{},[156])

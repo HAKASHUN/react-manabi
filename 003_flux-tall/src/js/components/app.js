@@ -12,7 +12,7 @@ var APP = React.createClass({
     },
     render: function() {
         return (
-          <h1 onClick={this.handleClick}>Hello React!</h1>
+          <h1 onClick={this.handleClick}>Add Item</h1>
         );
     }
 });

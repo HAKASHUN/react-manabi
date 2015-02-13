@@ -33,13 +33,13 @@ gulp.task('watch', function() {
 ### dispatcher structure
 
 ```bash
-src
+root/src
 ├── index.html
 └── js
     ├── components
     │   └── app.js
     ├── dispatchers
-    │   └── app-dispatcher.js
+    │   └── app-dispatcher.js // <-
     └── main.js
 
 ```
@@ -49,7 +49,7 @@ src
 ### actions structure
 
 ```bash
-src
+root/src
 ├── index.html
 └── js
     ├── components
@@ -57,7 +57,7 @@ src
     ├── dispatchers
     │   └── app-dispatcher.js
     ├── actions
-    │   └── app-actions.js
+    │   └── app-actions.js // <-
     └── main.js
 
 ```
@@ -109,3 +109,32 @@ var AppActions = {
 
 module.exports = AppAct
 ```
+
+#### constants
+
+- http://qiita.com/koba04/items/b32ba449d753fdb2b597#flux%E3%82%92%E6%A7%8B%E6%88%90%E3%81%99%E3%82%8B%E8%A6%81%E7%B4%A0
+> Fluxでは、各要素間でやりとりするtypeを定数のように定義します。
+
+
+- https://github.com/facebook/flux/blob/master/examples/flux-chat/js/constants/ChatConstants.js
+> Facebookのチャットサンプル
+
+#### constants structure
+
+```bash
+root/src
+├── index.html
+└── js
+    ├── actions
+    │   └── app-actions.js
+    ├── components
+    │   └── app.js
+    ├── constants
+    │   └── app-constants.js // <-
+    ├── dispatchers
+    │   └── app-dispatcher.js
+    └── main.js
+
+```
+
+#### app constants
