@@ -11,7 +11,7 @@ var LR_PORT = argv.port || argv.p || 8080;
 gulp.task('server', function() {
     return gulp.src('.')
         .pipe(webserver({
-            livereload: false,
+            livereload: true,
             port: LR_PORT,
             directoryListing: true
         }));
