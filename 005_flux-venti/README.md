@@ -93,3 +93,80 @@ var Catalog = React.createClass({
     }
 });
 ```
+
+### cart Component
+
+```javascript
+005_flux-venti/src/js/components
+├── app-addtocart.js
+├── app-cart.js // <=
+├── app-catalog.js
+└── app.js
+```
+
+```javascript
+/** @jsx React.DOM */
+var React = require('react');
+var Cart = React.createClass({
+    render: function() {
+        return (
+          <p>This is a Cart Component.</p>
+        )
+    }
+});
+module.exports = Cart;
+```
+
+### Get cart data
+
+```javascript
+function cartItems(){
+    return {
+        items: AppStore.getCart()
+    };
+}
+```
+
+### Render cart data
+
+```javascript
+ getInitialState:function(){
+     return cartItems();
+ }
+```
+
+```javascript
+var items = _.map(this.state.items, function(item){
+     return(
+         <tr>
+           <td>{item.title}</td>
+           <td>{item.quantity}</td>
+         </tr>
+     )
+    });
+return (
+    <table>
+      <thead>
+        <tr>
+          <td>Item</td>
+          <td>Quantity</td>
+        </tr>
+      </thead>
+      <tbody>
+        {items}
+      </tbody>
+    </table>
+)
+```
+
+### Update cart data
+
+```javascript
+componentWillMount: function() {
+  AppStore.addChangeListener(this._onChange);
+},
+_onChange: function() {
+    this.setState(cartItems());
+},
+```
+

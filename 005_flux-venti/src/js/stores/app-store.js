@@ -32,7 +32,6 @@ var _cartItems = [];
  * @private
  */
 function _addItem(item) {
-    alert(item);
     if(item.inCart) {
         _.forEach(_cartItems, function(v, i) {
            if(v.id === item.id) {
@@ -79,6 +78,13 @@ var AppStore = assign({}, EventEmitter.prototype, {
      */
     getCatalog: function() {
         return _catalog;
+    },
+    /**
+     * カートアイテムを取得できる
+     * @returns {{id: number, title: string, cost: number}[]}
+     */
+    getCart: function() {
+        return _cartItems;
     },
     /**
      * AppDispatcherがdispatchしたときに入ってくる

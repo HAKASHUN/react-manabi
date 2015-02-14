@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 var React = require('react');
 var AppStore = require('../stores/app-store');
+var AddToCart = require('../components/app-addtocart');
 var _ = require('lodash');
 
 function getCatalog() {
@@ -22,6 +23,7 @@ var Catalog = React.createClass({
                 <tr>
                   <td>{item.title}</td>
                   <td>${item.cost}</td>
+                  <td><AddToCart item={item} /></td>
                 </tr>
             )
         });

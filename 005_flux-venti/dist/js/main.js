@@ -30188,9 +30188,94 @@ module.exports = warning;
 module.exports = require('./lib/React');
 
 },{"./lib/React":35}],154:[function(require,module,exports){
+var AppDispatcher = require('../dispatchers/app-dispatcher.js');
+var AppConstants = require('../constants/app-constants.js');
+
+var AppActions = {
+  addItem: function(item) {
+      AppDispatcher.handleViewAction({
+          actionType: AppConstants.ADD_ITEM,
+          item: item
+      });
+  }
+};
+
+module.exports = AppActions;
+
+},{"../constants/app-constants.js":159,"../dispatchers/app-dispatcher.js":160}],155:[function(require,module,exports){
+/** @jsx React.DOM */
+var React = require('react');
+var AppActions = require('../actions/app-actions');
+
+var AddToCart = React.createClass({displayName: "AddToCart",
+   handleClick: function() {
+        AppActions.addItem(this.props.item);
+   },
+   render: function() {
+       return (
+            React.createElement("button", {onClick: this.handleClick}, "Add To Cart")
+       )
+   }
+});
+
+module.exports = AddToCart;
+
+},{"../actions/app-actions":154,"react":153}],156:[function(require,module,exports){
 /** @jsx React.DOM */
 var React = require('react');
 var AppStore = require('../stores/app-store');
+var AppActions = require('../actions/app-actions');
+var _ = require('lodash');
+
+function cartItems(){
+    return {
+        items: AppStore.getCart()
+    };
+}
+
+var Cart = React.createClass({displayName: "Cart",
+        getInitialState:function(){
+            return cartItems();
+        },
+        componentWillMount: function() {
+          AppStore.addChangeListener(this._onChange);
+        },
+        _onChange: function() {
+            this.setState(cartItems());
+        },
+        render: function() {
+            var items = _.map(this.state.items, function(item){
+                return(
+                    React.createElement("tr", null, 
+                      React.createElement("td", null, item.title), 
+                      React.createElement("td", null, item.quantity)
+                    )
+                )
+            });
+
+            return (
+                React.createElement("table", null, 
+                  React.createElement("thead", null, 
+                    React.createElement("tr", null, 
+                      React.createElement("td", null, "Item"), 
+                      React.createElement("td", null, "Quantity")
+                    )
+                  ), 
+                  React.createElement("tbody", null, 
+                    items
+                  )
+                )
+            )
+        }
+});
+
+module.exports = Cart;
+
+},{"../actions/app-actions":154,"../stores/app-store":162,"lodash":6,"react":153}],157:[function(require,module,exports){
+/** @jsx React.DOM */
+var React = require('react');
+var AppStore = require('../stores/app-store');
+var AddToCart = require('../components/app-addtocart');
 var _ = require('lodash');
 
 function getCatalog() {
@@ -30211,7 +30296,8 @@ var Catalog = React.createClass({displayName: "Catalog",
             return (
                 React.createElement("tr", null, 
                   React.createElement("td", null, item.title), 
-                  React.createElement("td", null, "$", item.cost)
+                  React.createElement("td", null, "$", item.cost), 
+                  React.createElement("td", null, React.createElement(AddToCart, {item: item}))
                 )
             )
         });
@@ -30225,10 +30311,11 @@ var Catalog = React.createClass({displayName: "Catalog",
 
 module.exports = Catalog;
 
-},{"../stores/app-store":159,"lodash":6,"react":153}],155:[function(require,module,exports){
+},{"../components/app-addtocart":155,"../stores/app-store":162,"lodash":6,"react":153}],158:[function(require,module,exports){
 /** @jsx React.DOM */
 var React = require('react');
 var Catalog = require('../components/app-catalog');
+var Cart = require('../components/app-cart');
 
 
 /**
@@ -30240,7 +30327,9 @@ var APP = React.createClass({displayName: "APP",
         return (
             React.createElement("div", null, 
             React.createElement("h1", null, "Lets Shop"), 
-            React.createElement(Catalog, null)
+            React.createElement(Catalog, null), 
+            React.createElement("h1", null, "Cart"), 
+            React.createElement(Cart, null)
             )
         )
     }
@@ -30249,7 +30338,7 @@ var APP = React.createClass({displayName: "APP",
 module.exports = APP;
 
 
-},{"../components/app-catalog":154,"react":153}],156:[function(require,module,exports){
+},{"../components/app-cart":156,"../components/app-catalog":157,"react":153}],159:[function(require,module,exports){
 var AppConstants = {
     ADD_ITEM: 'ADD_ITEM',
     REMOVE_ITEM: 'REMOVE_ITEM',
@@ -30259,7 +30348,7 @@ var AppConstants = {
 
 module.exports = AppConstants;
 
-},{}],157:[function(require,module,exports){
+},{}],160:[function(require,module,exports){
 var Dispatcher = require('flux').Dispatcher;
 var assign = require('object-assign');
 
@@ -30274,7 +30363,7 @@ var AppDispatcher = assign(new Dispatcher(), {
 
 module.exports = AppDispatcher;
 
-},{"flux":1,"object-assign":7}],158:[function(require,module,exports){
+},{"flux":1,"object-assign":7}],161:[function(require,module,exports){
 /** @jsx React.DOM */
 var APP = require('./components/app');
 var React = require('react');
@@ -30283,7 +30372,7 @@ React.render(
     document.getElementById('main')
 );
 
-},{"./components/app":155,"react":153}],159:[function(require,module,exports){
+},{"./components/app":158,"react":153}],162:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/app-dispatcher');
 var AppConstants = require('../constants/app-constants');
 var assign = require('object-assign');
@@ -30318,7 +30407,6 @@ var _cartItems = [];
  * @private
  */
 function _addItem(item) {
-    alert(item);
     if(item.inCart) {
         _.forEach(_cartItems, function(v, i) {
            if(v.id === item.id) {
@@ -30367,6 +30455,13 @@ var AppStore = assign({}, EventEmitter.prototype, {
         return _catalog;
     },
     /**
+     * カートアイテムを取得できる
+     * @returns {{id: number, title: string, cost: number}[]}
+     */
+    getCart: function() {
+        return _cartItems;
+    },
+    /**
      * AppDispatcherがdispatchしたときに入ってくる
      */
     dispatcherIndex: AppDispatcher.register(function(payload) {
@@ -30387,4 +30482,4 @@ var AppStore = assign({}, EventEmitter.prototype, {
 
 module.exports = AppStore;
 
-},{"../constants/app-constants":156,"../dispatchers/app-dispatcher":157,"events":4,"lodash":6,"object-assign":7}]},{},[158])
+},{"../constants/app-constants":159,"../dispatchers/app-dispatcher":160,"events":4,"lodash":6,"object-assign":7}]},{},[161])
