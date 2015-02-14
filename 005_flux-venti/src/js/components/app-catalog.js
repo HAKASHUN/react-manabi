@@ -1,14 +1,33 @@
 /** @jsx React.DOM */
 var React = require('react');
+var AppStore = require('../stores/app-store');
+var _ = require('lodash');
+
+function getCatalog() {
+    return {
+        items: AppStore.getCatalog()
+    };
+}
 
 /**
  * <Catalog />
  */
 var Catalog = React.createClass({
+    getInitialState: function() {
+      return getCatalog();
+    },
     render: function() {
+        var items = _.map(this.state.items, function(item) {
+            return (
+                <tr>
+                  <td>{item.title}</td>
+                  <td>${item.cost}</td>
+                </tr>
+            )
+        });
         return (
             <table>
-                <tr><td>名前</td><td>値段</td></tr>
+            {items}
             </table>
         )
     }

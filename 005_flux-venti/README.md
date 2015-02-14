@@ -21,3 +21,75 @@ var Catalog = React.createClass({
 module.exports = Catalog;
 ```
 
+### Set catalog data
+
+#### in store
+
+```javascript
+/**
+ * カタログデータ
+ * @type {{id: number, title: string, cost: number}[]}
+ * @private
+ */
+var _catalog = [
+    {id:1, title: 'Widget #1', cost: 1},
+    {id:2, title: 'Widget #2', cost: 2},
+    {id:3, title: 'Widget #3', cost: 3}
+];
+```
+
+
+### Get catalog data
+
+#### in store
+
+```javascript
+var AppStore = assign({}, EventEmitter.prototype, {
+   ...
+
+    /**
+     * カタログを取得できる
+     * @returns {{id: number, title: string, cost: number}[]}
+     */
+    getCatalog: function() {
+        return _catalog;
+    }
+
+    ...
+
+}
+```
+
+### Render Catalog data
+
+```javascript
+function getCatalog() {
+    return {
+        items: AppStore.getCatalog()
+    };
+}
+```
+
+```javascript
+var Catalog = React.createClass({
+    getInitialState: function() {
+      return getCatalog();
+    },
+    render: function() {
+        // カタログ内のitemの数だけjsxをつくる
+        var items = _.map(this.state.items, function(item) {
+            return (
+                <tr>
+                  <td>{item.title}</td>
+                  <td>${item.cost}</td>
+                </tr>
+            )
+        });
+        return (
+            <table>
+            {items} // React.createElement("table", null, items)
+            </table>
+        )
+    }
+});
+```

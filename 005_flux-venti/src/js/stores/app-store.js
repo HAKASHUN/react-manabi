@@ -7,6 +7,17 @@ var EventEmitter = require('events').EventEmitter;
 var CHANGE_EVENT = 'change';
 
 /**
+ * カタログデータ
+ * @type {{id: number, title: string, cost: number}[]}
+ * @private
+ */
+var _catalog = [
+    {id:1, title: 'Widget #1', cost: 1},
+    {id:2, title: 'Widget #2', cost: 2},
+    {id:3, title: 'Widget #3', cost: 3}
+];
+
+/**
  * シングルトンのカートアイテムデータ
  * @type {Array}
  * @private
@@ -61,6 +72,13 @@ var AppStore = assign({}, EventEmitter.prototype, {
      */
     removeChangeListener: function(callback) {
       this.removeListener(CHANGE_EVENT, callback);
+    },
+    /**
+     * カタログを取得できる
+     * @returns {{id: number, title: string, cost: number}[]}
+     */
+    getCatalog: function() {
+        return _catalog;
     },
     /**
      * AppDispatcherがdispatchしたときに入ってくる
