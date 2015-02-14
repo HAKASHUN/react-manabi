@@ -30197,12 +30197,30 @@ var AppActions = {
           actionType: AppConstants.ADD_ITEM,
           item: item
       });
-  }
+  },
+  removeItem: function(index) {
+      AppDispatcher.handleViewAction({
+          actionType: AppConstants.REMOVE_ITEM,
+          index: index
+      });
+  },
+  increaseItem: function(index) {
+      AppDispatcher.handleViewAction({
+          actionType: AppConstants.INCREASE_ITEM,
+          index: index
+      });
+  },
+  decreaseItem: function(index) {
+      AppDispatcher.handleViewAction({
+          actionType: AppConstants.DECREASE_ITEM,
+          index: index
+      });
+  },
 };
 
 module.exports = AppActions;
 
-},{"../constants/app-constants.js":159,"../dispatchers/app-dispatcher.js":160}],155:[function(require,module,exports){
+},{"../constants/app-constants.js":162,"../dispatchers/app-dispatcher.js":163}],155:[function(require,module,exports){
 /** @jsx React.DOM */
 var React = require('react');
 var AppActions = require('../actions/app-actions');
@@ -30226,6 +30244,9 @@ var React = require('react');
 var AppStore = require('../stores/app-store');
 var AppActions = require('../actions/app-actions');
 var _ = require('lodash');
+var RemoveFromCart = require('../components/app-removefromcart');
+var Increase = require('../components/app-increase');
+var Decrease = require('../components/app-decrease');
 
 function cartItems(){
     return {
@@ -30244,11 +30265,20 @@ var Cart = React.createClass({displayName: "Cart",
             this.setState(cartItems());
         },
         render: function() {
-            var items = _.map(this.state.items, function(item){
+            var total = 0;
+            var items = _.map(this.state.items, function(item, index){
+                var subTotal = item.cost * item.quantity;
+                total += subTotal;
                 return(
                     React.createElement("tr", null, 
+                      React.createElement("td", null, React.createElement(RemoveFromCart, {index: index})), 
                       React.createElement("td", null, item.title), 
-                      React.createElement("td", null, item.quantity)
+                      React.createElement("td", null, item.quantity), 
+                      React.createElement("td", null, 
+                        React.createElement(Increase, {index: index}), 
+                        React.createElement(Decrease, {index: index})
+                      ), 
+                      React.createElement("td", null, subTotal)
                     )
                 )
             });
@@ -30257,12 +30287,21 @@ var Cart = React.createClass({displayName: "Cart",
                 React.createElement("table", null, 
                   React.createElement("thead", null, 
                     React.createElement("tr", null, 
+                      React.createElement("td", null), 
                       React.createElement("td", null, "Item"), 
-                      React.createElement("td", null, "Quantity")
+                      React.createElement("td", null, "Quantity"), 
+                      React.createElement("td", null), 
+                      React.createElement("td", null)
                     )
                   ), 
                   React.createElement("tbody", null, 
                     items
+                  ), 
+                  React.createElement("tfoot", null, 
+                    React.createElement("tr", null, 
+                      React.createElement("td", {colSpan: "4"}, "Total"), 
+                      React.createElement("td", null, "$", total)
+                    )
                   )
                 )
             )
@@ -30271,7 +30310,7 @@ var Cart = React.createClass({displayName: "Cart",
 
 module.exports = Cart;
 
-},{"../actions/app-actions":154,"../stores/app-store":162,"lodash":6,"react":153}],157:[function(require,module,exports){
+},{"../actions/app-actions":154,"../components/app-decrease":158,"../components/app-increase":159,"../components/app-removefromcart":160,"../stores/app-store":165,"lodash":6,"react":153}],157:[function(require,module,exports){
 /** @jsx React.DOM */
 var React = require('react');
 var AppStore = require('../stores/app-store');
@@ -30311,7 +30350,61 @@ var Catalog = React.createClass({displayName: "Catalog",
 
 module.exports = Catalog;
 
-},{"../components/app-addtocart":155,"../stores/app-store":162,"lodash":6,"react":153}],158:[function(require,module,exports){
+},{"../components/app-addtocart":155,"../stores/app-store":165,"lodash":6,"react":153}],158:[function(require,module,exports){
+/** @jsx React.DOM */
+var React = require('react');
+var AppActions = require('../actions/app-actions');
+var _ = require('lodash');
+
+var Increase = React.createClass({displayName: "Increase",
+    handleClick: function() {
+      AppActions.decreaseItem(this.props.index);
+    },
+    render: function() {
+        return (
+            React.createElement("button", {onClick: this.handleClick}, "-")
+        )
+    }
+});
+module.exports = Increase;
+
+},{"../actions/app-actions":154,"lodash":6,"react":153}],159:[function(require,module,exports){
+/** @jsx React.DOM */
+var React = require('react');
+var AppActions = require('../actions/app-actions');
+var _ = require('lodash');
+
+var Increase = React.createClass({displayName: "Increase",
+    handleClick: function() {
+      AppActions.increaseItem(this.props.index);
+    },
+    render: function() {
+        return (
+            React.createElement("button", {onClick: this.handleClick}, "+")
+        )
+    }
+});
+module.exports = Increase;
+
+},{"../actions/app-actions":154,"lodash":6,"react":153}],160:[function(require,module,exports){
+/** @jsx React.DOM */
+var React = require('react');
+var AppActions = require('../actions/app-actions');
+var _ = require('lodash');
+
+var RemoveFromCart = React.createClass({displayName: "RemoveFromCart",
+    handleClick: function() {
+      AppActions.removeItem(this.props.index);
+    },
+    render: function() {
+        return (
+            React.createElement("button", {onClick: this.handleClick}, "x")
+        )
+    }
+});
+module.exports = RemoveFromCart;
+
+},{"../actions/app-actions":154,"lodash":6,"react":153}],161:[function(require,module,exports){
 /** @jsx React.DOM */
 var React = require('react');
 var Catalog = require('../components/app-catalog');
@@ -30338,7 +30431,7 @@ var APP = React.createClass({displayName: "APP",
 module.exports = APP;
 
 
-},{"../components/app-cart":156,"../components/app-catalog":157,"react":153}],159:[function(require,module,exports){
+},{"../components/app-cart":156,"../components/app-catalog":157,"react":153}],162:[function(require,module,exports){
 var AppConstants = {
     ADD_ITEM: 'ADD_ITEM',
     REMOVE_ITEM: 'REMOVE_ITEM',
@@ -30348,7 +30441,7 @@ var AppConstants = {
 
 module.exports = AppConstants;
 
-},{}],160:[function(require,module,exports){
+},{}],163:[function(require,module,exports){
 var Dispatcher = require('flux').Dispatcher;
 var assign = require('object-assign');
 
@@ -30363,7 +30456,7 @@ var AppDispatcher = assign(new Dispatcher(), {
 
 module.exports = AppDispatcher;
 
-},{"flux":1,"object-assign":7}],161:[function(require,module,exports){
+},{"flux":1,"object-assign":7}],164:[function(require,module,exports){
 /** @jsx React.DOM */
 var APP = require('./components/app');
 var React = require('react');
@@ -30372,7 +30465,7 @@ React.render(
     document.getElementById('main')
 );
 
-},{"./components/app":158,"react":153}],162:[function(require,module,exports){
+},{"./components/app":161,"react":153}],165:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/app-dispatcher');
 var AppConstants = require('../constants/app-constants');
 var assign = require('object-assign');
@@ -30420,6 +30513,11 @@ function _addItem(item) {
     }
 }
 
+function _removeItem(index) {
+    _cartItems[index].inCart = false;
+    _cartItems.splice(index, 1);
+}
+
 /**
  * アイテムの量を増やす
  * @param index
@@ -30427,6 +30525,20 @@ function _addItem(item) {
  */
 function _increaseItem(index) {
     _cartItems[index].quantity++;
+}
+
+/**
+ * アイテムの量を増やす
+ * @param index
+ * @private
+ */
+function _decreaseItem(index) {
+    if(_cartItems[index].quantity > 1){
+        _cartItems[index].quantity--;
+    }
+    else {
+        _removeItem(index);
+    }
 }
 
 var AppStore = assign({}, EventEmitter.prototype, {
@@ -30471,6 +30583,15 @@ var AppStore = assign({}, EventEmitter.prototype, {
             case AppConstants.ADD_ITEM:
                 _addItem(payload.action.item);
                 break;
+            case AppConstants.REMOVE_ITEM:
+                _removeItem(payload.action.index);
+                break;
+            case AppConstants.INCREASE_ITEM:
+                _increaseItem(payload.action.index);
+                break;
+            case AppConstants.DECREASE_ITEM:
+                _decreaseItem(payload.action.index);
+                break;
         }
 
         AppStore.emitChange();
@@ -30482,4 +30603,4 @@ var AppStore = assign({}, EventEmitter.prototype, {
 
 module.exports = AppStore;
 
-},{"../constants/app-constants":159,"../dispatchers/app-dispatcher":160,"events":4,"lodash":6,"object-assign":7}]},{},[161])
+},{"../constants/app-constants":162,"../dispatchers/app-dispatcher":163,"events":4,"lodash":6,"object-assign":7}]},{},[164])

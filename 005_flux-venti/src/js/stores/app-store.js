@@ -45,6 +45,11 @@ function _addItem(item) {
     }
 }
 
+function _removeItem(index) {
+    _cartItems[index].inCart = false;
+    _cartItems.splice(index, 1);
+}
+
 /**
  * アイテムの量を増やす
  * @param index
@@ -52,6 +57,20 @@ function _addItem(item) {
  */
 function _increaseItem(index) {
     _cartItems[index].quantity++;
+}
+
+/**
+ * アイテムの量を増やす
+ * @param index
+ * @private
+ */
+function _decreaseItem(index) {
+    if(_cartItems[index].quantity > 1){
+        _cartItems[index].quantity--;
+    }
+    else {
+        _removeItem(index);
+    }
 }
 
 var AppStore = assign({}, EventEmitter.prototype, {
@@ -95,6 +114,15 @@ var AppStore = assign({}, EventEmitter.prototype, {
         switch (action.actionType) {
             case AppConstants.ADD_ITEM:
                 _addItem(payload.action.item);
+                break;
+            case AppConstants.REMOVE_ITEM:
+                _removeItem(payload.action.index);
+                break;
+            case AppConstants.INCREASE_ITEM:
+                _increaseItem(payload.action.index);
+                break;
+            case AppConstants.DECREASE_ITEM:
+                _decreaseItem(payload.action.index);
                 break;
         }
 
