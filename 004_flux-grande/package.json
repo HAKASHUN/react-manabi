@@ -1,0 +1,14 @@
+{
+  "name": "flux-tall",
+  "version": "0.0.0",
+  "devDependencies": {
+    "gulp": "*",
+    "gulp-browserify": "*",
+    "gulp-concat": "*",
+    "react": "*",
+    "reactify": "*",
+    "flux": "*",
+    "object-assign": "*",
+    "lodash": "*"
+  }
+}
