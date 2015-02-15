@@ -62,3 +62,9 @@ var Dispatcher = require('flux').Dispatcher;
 module.exports = new Dispatcher();
 
 ```
+
+### 実装してみて
+
+- keyMirrorが地味に便利
+- WebStormで書きにくい
+
