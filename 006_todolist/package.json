@@ -1,10 +1,10 @@
 {
-  "name": "flux-venti",
+  "name": "todolist",
   "version": "0.0.0",
   "devDependencies": {
     "gulp": "*",
     "gulp-browserify": "*",
-    "gulp-concat": "*",
+    "gulp-rename": "*",
     "react": "*",
     "reactify": "*",
     "flux": "*",
