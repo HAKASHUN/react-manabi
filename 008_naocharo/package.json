@@ -1,0 +1,16 @@
+{
+  "name": "naocharo",
+  "version": "0.0.0",
+  "devDependencies": {
+    "flux": "*",
+    "gulp": "*",
+    "browserify": "*",
+    "watchify": "*",
+    "reactify": "*",
+    "vinyl-source-stream": "*",
+    "react": "*",
+    "object-assign": "*",
+    "superagent": "*",
+    "jsonp": "*"
+  }
+}
