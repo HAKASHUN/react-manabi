@@ -1,0 +1,12 @@
+{
+  "name": "009_gulp",
+  "version": "0.0.0",
+  "devDependencies": {
+    "gulp": "*",
+    "browserify": "*",
+    "watchify": "*",
+    "reactify": "*",
+    "vinyl-source-stream": "*",
+    "react": "*"
+  }
+}
