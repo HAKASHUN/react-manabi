@@ -19,6 +19,7 @@
     "webpack-dev-middleware": "^1.2.0",
     "webpack-hot-middleware": "^2.2.0",
     "babel-loader": "^5.3.2",
-    "express": "^4.13.3"
+    "express": "^4.13.3",
+    "react": "^0.13.3"
   }
 }

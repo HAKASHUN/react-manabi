@@ -122,3 +122,53 @@ app.listen(port, function(error) {
 [redux/examples/todomvc](https://github.com/rackt/redux/blob/master/examples/todomvc/webpack.config.js)
 [boilerplate-webpack-react](https://github.com/tcoopman/boilerplate-webpack-react)
 
+## エントリーポイントの実装
+
+### <Provider> 
+
+[<Provider store> | 公式ドキュメント](https://github.com/rackt/react-redux/blob/master/docs/api.md#provider-store)
+
+- ルートのコンポーネント
+- reduxで１元的に管理するstoreを持たせる
+- 少し特殊な書き方で、アプリのコンポーネントを定義する
+    - React0.13のバグ対応？
+
+```javascript
+React.render(
+  // The child must be wrapped in a function
+  // to work around an issue in React 0.13.
+  <Provider store={store}>
+    {() => <App />}
+  </Provider>,
+  rootElement
+);
+```
+
+### storeの作成
+
+```javascript
+import { createStore } from 'redux';
+import todoApp from './reducers/index';
+
+let store = createStore(todoApp);
+```
+
+### reducerの作成
+
+- combineReducersを使って、複数のreducerをつなげる
+- ここでは必ず`['hoge', 'foo', 'bar']`を返すように実装した
+- `(previousState, action) => newState`の形をもつただのfunctionがreducerであり、あまり複雑なものではない
+
+```javascript
+import { combineReducers } from 'redux';
+
+function todos(state = ['hoge', 'foo', 'bar'], action) {
+  return state;
+}
+
+const todoApp = combineReducers({
+  todos
+});
+
+export default todoApp;
+```
