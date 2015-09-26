@@ -124,9 +124,9 @@ app.listen(port, function(error) {
 
 ## エントリーポイントの実装
 
-### <Provider> 
+### \<Provider\> 
 
-[<Provider store> | 公式ドキュメント](https://github.com/rackt/react-redux/blob/master/docs/api.md#provider-store)
+[\<Provider\> | 公式ドキュメント](https://github.com/rackt/react-redux/blob/master/docs/api.md#provider-store)
 
 - ルートのコンポーネント
 - reduxで１元的に管理するstoreを持たせる
