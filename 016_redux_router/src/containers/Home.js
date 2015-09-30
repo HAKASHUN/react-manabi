@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 
 class Home extends Component {
   render() {
@@ -11,4 +12,11 @@ class Home extends Component {
   }
 }
 
-export default Home;
+function mapStateToProps(state) {
+  return {
+
+  };
+}
+
+
+export default connect(mapStateToProps)(Home);
